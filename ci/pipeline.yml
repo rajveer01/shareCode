@@ -1,0 +1,19 @@
+resources:
+  - name: shareCode
+    type: git
+    source: &repo-source
+      uri: https://github.com/rajveer01/shareCode
+      branch: main
+
+jobs:
+  - name: Install dependencies
+    plan:
+      - get: shareCode
+        trigger: true
+  - name: Run tests
+    plan:
+      - get: shareCode
+        trigger: true
+        passed: [Install dependencies]
+      - task: run the test suite
+        file: shareCode/ci/tasks/run_tests.yml

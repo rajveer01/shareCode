@@ -1,0 +1,13 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: latest
+
+inputs:
+  - name: hello_hapi
+
+run:
+  path: hello_hapi/ci/scripts/run_tests.sh
