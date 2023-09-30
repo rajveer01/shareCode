@@ -1,0 +1,36 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: docker.io/drnic/github-release-resource }
+
+inputs:
+- name: your-repo
+
+params:
+  GITHUB_TOKEN: ((GITHUB_TOKEN))
+  TAG_NAME: release-1.0.0  # Replace with the desired tag name
+  RELEASE_NAME: Release 1.0.0  # Replace with the desired release name
+  RELEASE_NOTES_FILE: path/to/release-notes.md  # Replace with the path to your release notes file
+  ARTIFACT_FILE: path/to/release-artifact.zip  # Replace with the path to your release artifact
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    # Install jq for JSON parsing
+    apk add --no-cache jq
+
+    # Create the GitHub release using the github-release tool
+    github-release release \
+      --owner yourusername \
+      --repo your-repo \
+      --tag "$TAG_NAME" \
+      --name "$RELEASE_NAME" \
+      --input "$ARTIFACT_FILE" \
+      --description "$(cat $RELEASE_NOTES_FILE)" \
+      --pre-release=false \
+      --commitish main \
+      --token "$GITHUB_TOKEN"
