@@ -11,7 +11,7 @@ def calculate_average_grade(grades):
         raise ValueError("The list of grades is empty.")
 
     total_grades=sum(grades)
-    average_grade=total_grades /len(grades)
+    average_grade=total_grades/len(grades)
     return average_grade
 
 
