@@ -1,1 +1,0 @@
-echo "dj_mahesh"
